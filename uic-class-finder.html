@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Find My Class - UIC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #0056a3;
+            font-size: 24px;
+        }
+        #search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            box-sizing: border-box; /* Ensure padding doesn't break layout */
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #0056a3;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003d73;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .not-found {
+            color: red;
+        }
+        iframe {
+            margin-top: 20px;
+            width: 100%;
+            height: 300px;
+            border: 0;
+        }
+
+        /* Responsive design for small screens */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+            input[type="text"], button {
+                font-size: 14px;
+                padding: 8px;
+            }
+            #result {
+                font-size: 16px;
+            }
+            iframe {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="search-container">
+        <h1>Find My Class - UIC</h1>
+        <p>Enter your building and room code (e.g., "2LCD D001" or "TH117").</p>
+        <input type="text" id="inputCode" placeholder="Enter code here..." />
+        <button onclick="findClass()">Find Class</button>
+        <div id="result"></div>
+        <iframe id="map" src="" style="display: none;"></iframe>
+    <p style="font-size: 12px; color: #a0a0a0;">Made by: Adam Roman</p>
+<p style="font-size: 12px; color: #a0a0a0;">Report any bugs to aroma20@uic.edu</p>
+    </div>
+
+    <script>
+        // Mapping of building codes to their names and Google Maps locations
+        const buildingData = {
+    "UH": { name: "University Hall", location: "601 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=601+South+Morgan+Street+Chicago&output=embed" },
+    "JH": { name: "Jefferson Hall", location: "929 West Harrison Street, Chicago", map: "https://www.google.com/maps?q=929+West+Harrison+Street+Chicago&output=embed" },
+    "LCA": { name: "Lecture Center Building A", location: "805 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=805+South+Morgan+Street+Chicago&output=embed" },
+    "LCB": { name: "Lecture Center Building B", location: "803 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=803+South+Morgan+Street+Chicago&output=embed" },
+    "LCC": { name: "Lecture Center Building C", location: "802 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=802+South+Halsted+Street+Chicago&output=embed" },
+    "LCD": { name: "Lecture Center Building D", location: "804 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=804+South+Halsted+Street+Chicago&output=embed" },
+    "LCE": { name: "Lecture Center Building E", location: "806 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=806+South+Halsted+Street+Chicago&output=embed" },
+    "LCF": { name: "Lecture Center Building F", location: "807 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=807+South+Morgan+Street+Chicago&output=embed" },
+    "SCE": { name: "UIC Student Center East", location: "750 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=750+South+Halsted+Street+Chicago&output=embed" },
+    "SCET": { name: "UIC Student Center East Tower", location: "710 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=710+South+Halsted+Street+Chicago&output=embed" },
+    "SELE": { name: "Science & Engineering Laboratory East", location: "950 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=950+South+Halsted+Street+Chicago&output=embed" },
+    "SELW": { name: "Science & Engineering Laboratory West", location: "900 West Taylor Street, Chicago", map: "https://www.google.com/maps?q=900+West+Taylor+Street+Chicago&output=embed" },
+    "LIB": { name: "Richard J. Daley Library", location: "801 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=801+South+Morgan+Street+Chicago&output=embed" },
+    "UTB": { name: "Utilities Building", location: "1100 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=1100+South+Morgan+Street+Chicago&output=embed" },
+    "PPB": { name: "Physical Plant Building", location: "1140 S Morgan Street, Chicago", map: "https://www.google.com/maps?q=1140+S+Morgan+Street+Chicago&output=embed" },
+    "GH": { name: "Grant Hall", location: "703 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=703+South+Morgan+Street+Chicago&output=embed" },
+    "DH": { name: "Douglass Hall", location: "705 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=705+South+Morgan+Street+Chicago&output=embed" },
+    "LH": { name: "Lincoln Hall", location: "707 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=707+South+Morgan+Street+Chicago&output=embed" },
+    "TH": { name: "Taft Hall", location: "826 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=826+South+Halsted+Street+Chicago&output=embed" },
+    "AH": { name: "Addams Hall", location: "830 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=830+South+Halsted+Street+Chicago&output=embed" },
+    "BH": { name: "Burnham Hall", location: "828 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=828+South+Halsted+Street+Chicago&output=embed" },
+    "BSB": { name: "Behavioral Sciences Building", location: "1007 West Harrison Street, Chicago", map: "https://www.google.com/maps?q=1007+West+Harrison+Street+Chicago&output=embed" },
+    "SES": { name: "Science & Engineering South", location: "845 West Taylor Street, Chicago", map: "https://www.google.com/maps?q=845+West+Taylor+Street+Chicago&output=embed" },
+    "HRPS": { name: "Harrison Street Parking Structure", location: "1100 West Harrison Street, Chicago", map: "https://www.google.com/maps?q=1100+West+Harrison+Street+Chicago&output=embed" },
+    "RRB": { name: "Roosevelt Road Building", location: "728 West Roosevelt Road, Chicago", map: "https://www.google.com/maps?q=728+West+Roosevelt+Road+Chicago&output=embed" },
+    "HLPS": { name: "Halsted Street Parking Structure", location: "801 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=801+South+Halsted+Street+Chicago&output=embed" },
+    "ETMSW": { name: "Education, Theatre, Music and Social Work", location: "1040 West Harrison Street, Chicago", map: "https://www.google.com/maps?q=1040+West+Harrison+Street+Chicago&output=embed" },
+    "UICT": { name: "UIC Theatre", location: "1044 West Harrison Street, Chicago", map: "https://www.google.com/maps?q=1044+West+Harrison+Street+Chicago&output=embed" },
+    "HH": { name: "Henry Hall", location: "935 West Harrison Street, Chicago", map: "https://www.google.com/maps?q=935+West+Harrison+Street+Chicago&output=embed" },
+    "SH": { name: "Stevenson Hall", location: "701 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=701+South+Morgan+Street+Chicago&output=embed" },
+    "ADS": { name: "Architecture and Design Studios", location: "845 West Harrison Street, Chicago", map: "https://www.google.com/maps?q=845+West+Harrison+Street+Chicago&output=embed" },
+    "EIB": { name: "Engineering Innovation Building", location: "929 West Taylor Street, Chicago", map: "https://www.google.com/maps?q=929+West+Taylor+Street+Chicago&output=embed" },
+    "SRF": { name: "Student Recreation Facility", location: "737 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=737+South+Halsted+Street+Chicago&output=embed" },
+    "SEO": { name: "Science & Engineering Offices", location: "851 South Morgan Street, Chicago", map: "https://www.google.com/maps?q=851+South+Morgan+Street+Chicago&output=embed" },
+    "PEB": { name: "Physical Education Building", location: "901 West Roosevelt Street, Chicago", map: "https://www.google.com/maps?q=901+West+Roosevelt+Street+Chicago&output=embed" },
+    "PRL": { name: "Plant Research Laboratory", location: "1020 South Union Street, Chicago", map: "https://www.google.com/maps?q=1020+South+Union+Street+Chicago&output=embed" },
+    "ARENA": { name: "Credit Union 1 Arena", location: "525 South Racine Avenue, Chicago", map: "https://www.google.com/maps?q=525+South+Racine+Avenue+Chicago&output=embed" },
+    "ARC": { name: "Academic & Residential Complex", location: "940 West Harrison Street, Chicago", map: "https://www.google.com/maps?q=940+West+Harrison+Street+Chicago&output=embed" },
+    "AEH": { name: "Art and Exhibition Hall", location: "400 South Peoria Street, Chicago", map: "https://www.google.com/maps?q=400+South+Peoria+Street+Chicago&output=embed" },
+    "CUPPAH": { name: "College of Urban Planning & Public Affairs Hall", location: "412 South Peoria Street, Chicago", map: "https://www.google.com/maps?q=412+South+Peoria+Street+Chicago&output=embed" },
+    "CEB": { name: "Chemical Engineering Building", location: "810 South Clinton Street, Chicago", map: "https://www.google.com/maps?q=810+South+Clinton+Street+Chicago&output=embed" },
+    "SRCC": { name: "Student Residence and Commons Courtyard", location: "600 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=600+South+Halsted+Street+Chicago&output=embed" },
+    "SRCN": { name: "Student Residence and Commons North", location: "650 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=650+South+Halsted+Street+Chicago&output=embed" },
+"EEI": { name: "Eye and Ear Infirmary", location: "1855 West Taylor Street, Chicago", map: "https://www.google.com/maps?q=1855+West+Taylor+Street+Chicago&output=embed" },
+    "MISC": { name: "Tunnels and Underground", location: "Underground, Chicago", map: "https://www.google.com/maps?q=Underground+Chicago&output=embed" },
+    "HRB": { name: "Human Resources Building", location: "715 South Wood Street, Chicago", map: "https://www.google.com/maps?q=715+South+Wood+Street+Chicago&output=embed" },
+    "CMW": { name: "College of Medicine West", location: "1819 West Polk Street, Chicago", map: "https://www.google.com/maps?q=1819+West+Polk+Street+Chicago&output=embed" },
+    "CMWT": { name: "College of Medicine West Tower", location: "1853 West Polk Street, Chicago", map: "https://www.google.com/maps?q=1853+West+Polk+Street+Chicago&output=embed" },
+    "TBH": { name: "Thomas Beckham Hall", location: "1250 South Halsted Street, Chicago", map: "https://www.google.com/maps?q=1250+South+Halsted+Street+Chicago&output=embed"},
+    "CMET": { name: "College of Medicine East Tower", location: "808 South Wood Street, Chicago", map: "https://www.google.com/maps?q=808+South+Wood+Street+Chicago&output=embed" },
+    "CSN": { name: "Clinical Sciences North", location: "820 South Wood Street, Chicago", map: "https://www.google.com/maps?q=820+South+Wood+Street+Chicago&output=embed" },
+    "MCA": { name: "Medical Center Administration Building", location: "914 South Wood Street, Chicago", map: "https://www.google.com/maps?q=914+South+Wood+Street+Chicago&output=embed" },
+    "AHSB": { name: "Applied Health Sciences Building", location: "1919 West Taylor Street, Chicago", map: "https://www.google.com/maps?q=1919+West+Taylor+Street+Chicago&output=embed" }
+};
+
+        function findClass() {
+            const input = document.getElementById("inputCode").value.toUpperCase().trim();
+            const resultDiv = document.getElementById("result");
+            const mapIframe = document.getElementById("map");
+
+            // Split input into parts (building code and room number)
+            const parts = input.match(/([A-Z]+)(\s?\w+)?/);
+            if (!parts) {
+                displayNotFound(resultDiv, mapIframe);
+                return;
+            }
+
+            const buildingCode = parts[1]; // Extract building code
+            const roomNumber = parts[2] ? parts[2].trim() : "unknown"; // Extract room number
+
+            if (buildingData[buildingCode]) {
+                const building = buildingData[buildingCode];
+                resultDiv.innerHTML = `📍 <strong>${building.name}</strong> - Room ${roomNumber}`;
+                resultDiv.classList.remove("not-found");
+
+                // Show Google Maps
+                mapIframe.src = building.map;
+                mapIframe.style.display = "block";
+            } else {
+                displayNotFound(resultDiv, mapIframe);
+            }
+        }
+
+        function displayNotFound(resultDiv, mapIframe) {
+            resultDiv.innerHTML = "❌ Building or classroom not found. Please try again.";
+            resultDiv.classList.add("not-found");
+            mapIframe.style.display = "none";
+        }
+    </script>
+</body>
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Modal</title>
+  <style>
+    /* General styles */
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+    /* Help button styles */
+    #helpButton {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #helpButton:hover {
+      background-color: #0056b3;
+    }
+
+    /* Modal overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    /* Modal content */
+    .modal-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1001;
+    }
+
+    /* Close button */
+    .close-button {
+      float: right;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .close-button:hover {
+      color: red;
+    }
+
+    /* Responsive modal text */
+    .modal-text {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <!-- Help Button -->
+  <button id="helpButton">Help</button>
+
+  <!-- Modal -->
+  <div id="helpModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-button" onclick="closeModal()">×</button>
+      <div class="modal-text">
+        If you need help finding your class or finding your building code, go to your generated schedule from the UIC schedule planner. If you have your classes already registered, you can also go to the XE Registration and find it there. <br><br>
+        <strong>Steps:</strong> <br>
+        1. Go to <em>My.UIC.edu</em> -> <em> XE Registration <em> -> <em>Register for Classes</em>.<br>
+        2. Select your term.<br>
+        3. Select the class you are trying to find the classroom for.<br>
+        4. Check the <em>Instructor/Meeting Times</em>, and it will tell you exactly where and when your classes are!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get the modal and help button
+    const helpButton = document.getElementById('helpButton');
+    const helpModal = document.getElementById('helpModal');
+
+    // Show the modal when the button is clicked
+    helpButton.addEventListener('click', () => {
+      helpModal.style.display = 'block';
+    });
+
+    // Close the modal when the close button is clicked
+    function closeModal() {
+      helpModal.style.display = 'none';
+    }
+
+    // Close the modal when the user clicks outside the modal content
+    window.addEventListener('click', (event) => {
+      if (event.target === helpModal) {
+        helpModal.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+
+
+
+
+</html>
