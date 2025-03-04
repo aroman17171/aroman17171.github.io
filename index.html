@@ -23,136 +23,164 @@
 
   <style>
     body {
-      background-color: #303030; /* Set the background color */
-      color: white; /* Set the text color */
-      font-family: "Times New Roman", serif, sans-serif, cursive; /* Clean font style */
-      margin: 10px; /* Remove default margin */
-      padding: 10px; /* Remove default padding */
+      background-color: #303030;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      padding: 10px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      min-height: 100vh; /* Full viewport height */
+      min-height: 100vh;
+      overflow-x: hidden;
+      animation: fadeIn 1s ease-in-out;
     }
 
     .container {
-      max-width: 800px; /* Limit the width for better readability */
-      width: 90%; /* Responsive width */
+      max-width: 800px;
+      width: 90%;
       padding: 20px;
-      text-align: center; /* Center text alignment */
+      text-align: center;
       background-color: #2c2c2c;
+      border-radius: 10px;
+      box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+      animation: fadeInUp 1s ease-in-out;
     }
-    .socialContainer{
-      position: absolute;
-      top: 0px;
-      right: 0px;
+
+    .header {
+      background: url('https://source.unsplash.com/random/1600x400?technology') no-repeat center center/cover;
+      padding: 20px 20px;
+      border-radius: 10px;
       color: white;
+      text-align: center;
+      animation: slideDown 1s ease-in-out;
+    }
+
+    .socialContainer {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
       background-color: #272727;
       padding: 15px;
       font-size: 14px;
-      text-align: left;
+      text-align: center;
       border-radius: 8px;
-      min-width: 10%;
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
 
+    .socialContainer a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 10px 15px;
+      background-color: #444;
+      border-radius: 5px;
+      margin: 5px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .socialContainer a:hover {
+      background-color: #777;
     }
 
     h1, h2, h3 {
       color: white;
-      font-family: "Serif", sans-serif, cursive, Arial;
     }
-    h1{
-      font-size: 2.5em;
 
-    }
-    h2{
-      font-size: 1.5em;
-    }
-    h3{
-      font-size: 1em;
-    }
+    h1 { font-size: 2.5em; }
+    h2 { font-size: 1.5em; }
+    h3 { font-size: 1.2em; }
 
     section {
-      margin-bottom: 40px; /* Add space between sections */
-      text-align: left; /* Center headers and descriptions */
+      margin-bottom: 40px;
+      text-align: left;
+      animation: fadeInUp 1s ease-in-out;
     }
 
     .links {
-      text-align: left; /* Left-align links */
+      text-align: center;
       margin: 10px auto;
-      display: inline-block; /* Keep links together in a block */
-      background-color: #272727;
-      padding: 8px;
-      border-radius: 8px;
-      min-width: 50%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 10px;
     }
 
-    ul {
-      list-style-type: none; /* Remove bullet points */
-      padding: 0;
-      margin: 0;
+    .links a {
+      display: inline-block;
+      padding: 15px;
+      background-color: #444;
+      color: white;
+      border-radius: 0;
+      text-align: center;
+      text-decoration: none;
+      width: 200px;
     }
 
-    li {
-      margin: 5px 0;
+    .links a:hover {
+      background-color: #777;
     }
 
-    a {
-      color: #a9a9ff; /* Lighter color for links */
-      text-decoration: none; /* Remove underline */
-      font-size: 16px;
+    .divider {
+      border-top: 2px solid #777;
+      width: 80%; /* Center the divider */
+      margin: 20px ; /* Adjust the margin for vertical centering */
     }
 
-    a:hover {
-      text-decoration: underline; /* Add underline on hover */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
-    hr {
-      border: 0;
-      border-top: 1px solid #555; /* Subtle horizontal line */
-      margin: 20px 0;
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
-<div class="socialContainer">
-  <img src="Logo.png" alt="Top-Left Logo">
-</div>
-<div class="socialContainer">
-  <p>Social links:</p>
-  <ul>
-    <li><a href="https://www.linkedin.com/in/adam-roman-746433315/" target="_blank">LinkedIn</a></li>
-  </ul>
-</div>
+
 <body>
+<div class="header">
+  <h1>Welcome to aroman17171.github.io!</h1>
+  <h2>A webpage showcasing my academic and personal projects.</h2>
+</div>
+
+<!-- Centered divider -->
+<div class="divider"></div>
+
+<div class="socialContainer">
+  <p>Social Links:</p>
+  <a href="https://www.linkedin.com/in/adam-roman-746433315/" target="_blank">LinkedIn</a>
+</div>
 
 <div class="container">
-  <h1>Welcome to <a href="https://aroman17171.github.io" style="font-size: 1em";>aroman17171.github.io</a>!</h1>
-  <h2>A webpage for all my school and personal projects</h2>
-
-  <hr>
-
   <section>
     <h3>UIC Class Finder Project (HTML):</h3>
-    <p>I made these as a tool for newer students to help find their classes based off building codes:</p>
+    <p>A web-based tool designed to assist new students in locating their classes based on building codes. The project utilizes HTML and JavaScript to provide a user-friendly interface for efficient class searching.</p>
     <div class="links">
-      <ul>
-        <li><a href="/uic-class-finder.html">UIC Class Finder Github</a></li>
-        <li><a href="https://sites.google.com/view/uic-class-finder/home">UIC Class Finder Google Sites</a></li>
-        <li><a href="https://aroman17171.w3spaces.com/uic-class-finder.html">UIC Class Finder w3spaces</a></li>
-      </ul>
+      <a href="/uic-class-finder.html">Github</a>
+      <a href="https://sites.google.com/view/uic-class-finder/home">Google Sites</a>
+      <a href="https://aroman17171.w3spaces.com/uic-class-finder.html">w3spaces</a>
     </div>
   </section>
 
-  <hr>
-
+  <!-- 3 Card Poker Project -->
   <section>
     <h3>3 Card Poker Project Downloads (Java):</h3>
-    <p>I made these in Java using Maven and IntelliJ IDEA for a class project:</p>
+    <p>A networked version of the 3 Card Poker game, implemented with Java Sockets and JavaFX. This project includes a multi-threaded server, client-server communication, and a GUI.</p>
     <div class="links">
-      <ul>
-        <li><a href="/aroma20Project2.zip">Singleplayer Version Download</a></li>
-        <li><a href="/aroma20Project3.zip">Server/Client Version Download</a></li>
-      </ul>
+      <a href="/aroma20Project2.zip">Singleplayer Version Download</a>
+      <a href="/aroma20Project3.zip">Server/Client Version Download</a>
     </div>
   </section>
+
 </div>
 </body>
 
