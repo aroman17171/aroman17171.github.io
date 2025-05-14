@@ -103,3 +103,15 @@ button:active {
     background-position: 0% 50%;
   }
 }
+@media (max-width: 600px) {
+  .links a, .links button {
+    width: 100%;   /* full width buttons on small screens */
+    font-size: 16px; /* adjust font size if needed */
+  }
+
+  .container {
+    padding: 10px;
+    width: 95%;
+  }
+}
+
