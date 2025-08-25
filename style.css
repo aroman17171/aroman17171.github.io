@@ -20,8 +20,6 @@ html, body {
     var(--c3) 0 180deg
   );
   background-size: var(--s) calc(var(--s) * 0.577);
-  
-  background-attachment: fixed;
 
   font-family: Arial, sans-serif;
   margin: 10px;
@@ -35,9 +33,6 @@ html, body {
 
   color: white;
   animation: fadeIn 1s ease-in-out;
-
-  background-repeat: repeat;
-  background-position: top left;
 }
 
 /* Container */
@@ -236,6 +231,13 @@ button:active {
 
 .card:hover {
   box-shadow: 0px 0px 30px 1px rgba(0, 150, 117, 0.30);
+}
+
+/* Cool tap effect for mobile */
+.card:active {
+  box-shadow: 0 0 40px 10px #00ddeb, 0 0 0 4px #af40ff;
+  transform: scale(0.96) rotate(-2deg);
+  transition: box-shadow 0.1s, transform 0.1s;
 }
 @keyframes fadeIn {
   from {
