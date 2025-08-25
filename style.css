@@ -1,7 +1,8 @@
 /* Body base styles and layout */
-body {
+html, body {
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
   --s: 200px; /* control the size */
   --c1: #101010;
   --c2: #191919;
