@@ -1,90 +1,196 @@
 <!doctype html>
-<html class="no-js" lang="en">
-
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>aroman17171.github.io</title>
+  <title>Adam Roman — Software Developer</title>
   <link rel="stylesheet" href="style.css" />
-  <meta name="description" content="" />
-
-  <meta property="og:title" content="" />
-  <meta property="og:type" content="" />
-  <meta property="og:url" content="" />
-  <meta property="og:image" content="" />
-  <meta property="og:image:alt" content="" />
-
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="icon.png" />
-
-  <link rel="manifest" href="site.webmanifest" />
-  <meta name="theme-color" content="#353540" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta name="description" content="Adam Roman — Software developer and CS graduate. Projects in Python, Java, C/C++, and web development." />
 </head>
-
 <body>
-<div class="color-bar"></div>
 
-<header class="header">
-  <h1>Welcome to aroman17171.github.io!</h1>
-  <h2>A webpage showcasing my academic and personal projects.</h2>
-</header>
+  <nav>
+    <span class="nav-name">Adam Roman</span>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="https://www.linkedin.com/in/adam-roman-746433315/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+      <li><a href="https://github.com/aroman17171" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('nav ul').classList.toggle('open')">☰</button>
+  </nav>
 
-<!-- Centered divider -->
-<div class="divider"></div>
-
-<section>
-  <h3 align="center">Proficiency in:</h3>
-  <div class="card-grid">
-    <div class="card"><div class="card2"><h3>Python</h3></div></div>
-    <div class="card"><div class="card2"><h3>C/C++</h3></div></div>
-    <div class="card"><div class="card2"><h3>UI</h3></div></div>
-    <div class="card"><div class="card2"><h3>Java</h3></div></div>
-    <div class="card"><div class="card2"><h3>HTML</h3></div></div>
-    <div class="card"><div class="card2"><h3>CSS</h3></div></div>
-    <div class="card"><div class="card2"><h3>Git</h3></div></div>
-  </div>
-</section>
-
-<!-- Centered divider -->
-<div class="divider"></div>
-
-<h3 align="center">Projects:</h3>
-<!-- temporarily disable
-<div class="socialContainer">
-  <p>Social Links:</p>
-  <a href="https://www.linkedin.com/in/adam-roman-746433315/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-</div>
--->
-<main class="container">
-  <section>
-    <h3>UIC Class Finder Project (HTML):</h3>
-    <p>
-      A web-based tool designed to assist new students in locating their classes
-      based on building codes. The project utilizes HTML and JavaScript to provide a
-      user-friendly interface for efficient class searching.
-    </p>
-    <div class="links">
-      <button onclick="location.href='/uic-class-finder.html'"><span>Github</span></button>
-      <button onclick="location.href='https://sites.google.com/view/uic-class-finder/home'"><span>Google Sites</span></button>
-      <button onclick="location.href='https://aroman17171.w3spaces.com/uic-class-finder.html'"><span>w3spaces</span></button>
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-label">Software Developer</p>
+      <h1>Adam Roman</h1>
+      <p class="hero-bio">I build tools that solve real problems — from sim racing telemetry analyzers to networked multiplayer games. CS graduate from UIC, actively seeking full-time software development roles.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn">View My Work</a>
+        <a href="https://www.linkedin.com/in/adam-roman-746433315/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">3+</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Languages</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">UIC</span>
+        <span class="stat-label">CS Graduate</span>
+      </div>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <section>
-    <h3>3 Card Poker Project Downloads (Java):</h3>
-    <p>
-      A networked version of the 3 Card Poker game, implemented with Java Sockets and JavaFX.
-      This project includes a multi-threaded server, client-server communication, and a GUI.
-    </p>
-    <div class="links">
-      <button onclick="location.href='/aroma20Project2.zip'"><span>Singleplayer Version Download</span></button>
-      <button onclick="location.href='/aroma20Project3.zip'"><span>Server/Client Version Download</span></button>
+  <section id="about" class="section">
+    <div class="section-inner two-col">
+      <div>
+        <p class="section-label">About Me</p>
+        <h2>Developer &amp; Sim Racer</h2>
+        <p class="body-text">I'm a Computer Science graduate from the University of Illinois Chicago with a passion for building software that bridges technical skill and personal interest. When I'm not coding, you'll find me behind the wheel in Assetto Corsa, following motorsport, or deep in a game.</p>
+        <p class="body-text">I enjoy projects that involve data, performance, and real-world applications — which is why I built SRLTA, a professional telemetry analyzer for sim racing. I believe the best software solves problems you actually care about.</p>
+      </div>
+      <div class="interest-grid">
+        <div class="interest-card">
+          <span class="interest-icon">🏎</span>
+          <span>Cars &amp; Motorsport</span>
+        </div>
+        <div class="interest-card">
+          <span class="interest-icon">🎮</span>
+          <span>Gaming</span>
+        </div>
+        <div class="interest-card">
+          <span class="interest-icon">📊</span>
+          <span>Data Analysis</span>
+        </div>
+        <div class="interest-card">
+          <span class="interest-icon">💻</span>
+          <span>Software Dev</span>
+        </div>
+      </div>
     </div>
   </section>
-</main>
+
+  <section id="projects" class="section section-alt">
+    <div class="section-inner">
+      <p class="section-label">Work</p>
+      <h2>Projects</h2>
+
+      <div class="project-featured">
+        <div class="project-featured-text">
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Data Analysis</span>
+            <span class="tag">Sim Racing</span>
+          </div>
+          <h3>SRLTA — Sim Racing Lap Time Analyzer (In Progress)</h3>
+          <p>A professional-grade Python telemetry analysis tool for Assetto Corsa. Compares lap times using multi-channel data (speed, throttle, brake, lateral G) to identify where time is gained or lost corner-by-corner. Features MoTeC-style visualizations, automated coaching feedback, and support for SimHub and AC Shared Memory formats.</p>
+          <ul class="feature-list">
+            <li>Accurate delta calculation via time-based interpolation</li>
+            <li>Advanced corner detection with entry, apex, and exit identification</li>
+            <li>Professional telemetry plots with gain/loss coloring</li>
+            <li>Automated sector analysis and coaching insights</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/aroman17171/SRLTA" target="_blank" rel="noopener" class="btn">View on GitHub ↗</a>
+          </div>
+        </div>
+        <div class="project-featured-badge">
+          <span>SRLTA</span>
+          <span class="badge-sub">v2.0</span>
+        </div>
+      </div>
+
+      <div class="project-grid">
+
+        <div class="project-card">
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          <h3>UIC Class Finder</h3>
+          <p>A web tool that helps new UIC students locate their classrooms using building codes. Simple, fast, and practical — built to solve a real first-week problem.</p>
+          <div class="project-links">
+            <a href="/uic-class-finder.html" class="btn btn-sm">View Tool</a>
+            <a href="https://sites.google.com/view/uic-class-finder/home" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Google Sites ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-tags">
+            <span class="tag">Java</span>
+            <span class="tag">JavaFX</span>
+            <span class="tag">Sockets</span>
+          </div>
+          <h3>3 Card Poker</h3>
+          <p>A networked 3 Card Poker game with a multi-threaded server, client-server communication over Java Sockets, and a full JavaFX GUI. Available in singleplayer and multiplayer.</p>
+          <div class="project-links">
+            <a href="/aroma20Project2.zip" class="btn btn-sm">↓ Singleplayer</a>
+            <a href="/aroma20Project3.zip" class="btn btn-sm btn-outline">↓ Multiplayer</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <div class="section-inner">
+      <p class="section-label">Technical Skills</p>
+      <h2>What I Work With</h2>
+      <div class="skills-table">
+        <div class="skills-col">
+          <h4>Languages</h4>
+          <ul>
+            <li>Python</li>
+            <li>Java</li>
+            <li>C / C++</li>
+            <li>HTML &amp; CSS</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+        <div class="skills-col">
+          <h4>Frameworks &amp; Tools</h4>
+          <ul>
+            <li>JavaFX</li>
+            <li>Java Sockets</li>
+            <li>Git &amp; GitHub</li>
+            <li>Maven / IntelliJ IDEA</li>
+          </ul>
+        </div>
+        <div class="skills-col">
+          <h4>Concepts</h4>
+          <ul>
+            <li>UI / UX Design</li>
+            <li>Multithreading</li>
+            <li>Data Analysis</li>
+            <li>Client-Server Architecture</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-cta">
+    <div class="section-inner cta-inner">
+      <h2>Available for Work</h2>
+      <p>I'm a CS graduate actively looking for full-time software development roles. Feel free to reach out on LinkedIn.</p>
+      <a href="https://www.linkedin.com/in/adam-roman-746433315/" target="_blank" rel="noopener" class="btn">Get in Touch ↗</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Adam Roman</span>
+    <span>Chicago, IL</span>
+  </footer>
+
 </body>
-
 </html>
